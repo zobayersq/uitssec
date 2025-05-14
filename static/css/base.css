@@ -1,0 +1,579 @@
+/* 1️⃣ Dark and Light Theme Variables via [data-theme] */
+:root {
+  /* Dark mode defaults */
+  --bg-dark: #0F2027;
+  --bg-mid1: #203A43;
+  --bg-mid2: #2C5364;
+  --txt-primary: #F0F0F0;
+  --txt-secondary: #CCCCCC;
+  --overlay-bg: rgba(35, 39, 42, 0.6);
+  --shadow-light: rgba(44, 83, 100, 0.4);
+  --accent-red: #747474fe;
+  --transition-speed: 0.3s;
+}
+
+html[data-theme="light"] {
+  --bg-dark: #E8E8E8;
+  --bg-mid1: #DCDCDC;
+  --bg-mid2: #D0D0D0;
+  --txt-primary: #23272a;
+  --txt-secondary: #4a4a4a;
+  --overlay-bg: rgba(232, 232, 232, 0.8);
+  --shadow-light: rgba(0, 0, 0, 0.15);
+  /* accent-red remains */
+}
+
+/* Smooth theme transition */
+.theme-transition {
+  transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Import Bulma early to use its classes but override via variables */
+@import "bulma.css";
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrapper {
+  flex: 1;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-size: 1rem;
+  background: linear-gradient(to right, var(--bg-dark), var(--bg-mid1), var(--bg-mid2));
+  color: var(--txt-primary);
+  transition: background var(--transition-speed), color var(--transition-speed);
+  scroll-behavior: smooth;
+}
+
+/* Container width adjustments for better responsiveness */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 1rem;
+}
+
+/* Navbar improvements */
+.navbar {
+  padding: 0.5rem 0;
+}
+
+.navbar-brand .navbar-item img {
+  max-height: 2rem;
+}
+
+.navbar-menu {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-item {
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.navbar-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Social buttons in navbar */
+.navbar-end .buttons {
+  margin-bottom: 0;
+}
+
+.navbar-end .button.is-small {
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  margin: 0 0.2rem;
+}
+
+.navbar-end .button.is-small:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+/* Blur panel */
+.blurX {
+  backdrop-filter: blur(10px);
+  background-color: var(--overlay-bg);
+  box-shadow: 0 -5px 10px var(--shadow-light);
+  transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+/* Hero section improvements */
+.hero-bodyX {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4rem 1rem;
+}
+
+.hero-text {
+  max-width: 50%;
+}
+
+.hero-text .title {
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.hero-text .subtitle {
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.hero-image img {
+  max-height: 300px;
+  width: auto;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.hero-image img:hover {
+  transform: translateY(-10px) scale(1.05);
+}
+
+/* Social links in hero section */
+.social-links a {
+  font-size: 1.5rem;
+  color: var(--txt-primary);
+  transition: all 0.3s ease;
+  opacity: 0.8;
+  display: inline-block;
+}
+
+.social-links a:hover {
+  color: var(--accent-red);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Hero buttons */
+.hero-text .buttons .button {
+  transition: transform 0.2s, box-shadow 0.2s;
+  margin-right: 1rem;
+}
+
+.hero-text .buttons .button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px var(--shadow-light);
+}
+
+@media (max-width: 768px) {
+  .hero-bodyX {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+
+  .hero-text {
+    max-width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .hero-image img {
+    max-width: 200px;
+    margin-top: 1rem;
+  }
+
+  .social-links {
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+}
+
+/* Footer styling */
+.footerX {
+  backdrop-filter: blur(10px);
+  background-color: var(--overlay-bg);
+  padding: 3rem 0 1.5rem;
+  color: var(--txt-primary);
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* Enhanced footer styling */
+.footerX .columns {
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.footerX h4 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: var(--txt-primary);
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+}
+
+.footerX h4:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background-color: var(--accent-red);
+}
+
+.footerX ul.is-unstyled {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerX ul.is-unstyled li {
+  margin-bottom: 0.5rem;
+}
+
+.footerX ul.is-unstyled a {
+  color: var(--txt-secondary);
+  transition: color 0.2s ease;
+  display: inline-block;
+}
+
+.footerX ul.is-unstyled a:hover {
+  color: var(--accent-red);
+  transform: translateX(3px);
+}
+
+.footerX .social-buttons {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.footerX .social-buttons .button {
+  margin-bottom: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.footerX .social-buttons .button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+/* Accent links and buttons */
+.dj {
+  color: var(--accent-red);
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.dj:hover {
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+.notification.is-info {
+  background-color: rgba(44, 83, 100, 0.2);
+  border-color: var(--bg-mid1);
+  color: var(--txt-primary);
+  margin: 1rem 0;
+  border-radius: 6px;
+  position: relative;
+}
+
+.notification .delete {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+
+/* Blog card styling with blur effect */
+.blur-white {
+  backdrop-filter: blur(10px);
+  background-color: var(--overlay-bg);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 10px var(--shadow-light);
+  transition: transform 0.3s, box-shadow 0.3s;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.blur-white.fade-in-up {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.blur-white:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px var(--shadow-light);
+}
+
+.blur-white h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: bold;
+}
+
+.blur-white h3 a {
+  color: var(--txt-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.blur-white h3 a:hover {
+  color: var(--accent-red);
+}
+
+.blur-white p {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Bigger "More" button with better styling */
+.blur-white .button.is-link {
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 6px;
+  transition: background-color 0.3s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blur-white .button.is-link:hover {
+  transform: scale(1.05);
+}
+
+.blur-white .button.is-link .icon {
+  margin-left: 0.5rem;
+}
+
+/* Mobile navbar responsiveness fixes */
+@media screen and (max-width: 1023px) {
+  .navbar-menu {
+    position: absolute;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    box-shadow: 0 8px 16px var(--shadow-light);
+  }
+
+  .navbar-menu.is-active {
+    display: block;
+  }
+
+  .navbar-menu:not(.is-active) {
+    display: none;
+  }
+
+  .navbar-center {
+    flex-direction: column;
+    padding: 0.5rem 0;
+  }
+
+  .navbar-center .navbar-item {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .navbar-end {
+    flex-direction: row;
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+
+  .navbar-end .buttons {
+    justify-content: center;
+    padding: 0.5rem 0;
+  }
+}
+
+/* Comment styling for details page */
+.comment-body {
+  background-color: var(--overlay-bg);
+  border-radius: 6px;
+  border-left: 3px solid var(--accent-red);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.comment-body:hover {
+  transform: translateX(3px);
+}
+
+.love-button {
+  transition: transform 0.2s;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.love-button:hover {
+  transform: scale(1.15);
+}
+
+/* Animation for love count updates */
+.love-count-updated {
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Form field improvements */
+.field .control input,
+.field .control textarea {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: var(--bg-mid1);
+  color: var(--txt-primary);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field .control input:focus,
+.field .control textarea:focus {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 0 0.125em rgba(116, 116, 116, 0.25);
+}
+
+/* Post item in category listing */
+.post-item {
+  transition: transform 0.2s, background-color 0.2s;
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.post-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  transform: translateX(5px);
+}
+
+/* Better tag styling */
+.tags .tag {
+  transition: all 0.2s;
+  margin: 0.2rem;
+}
+
+.tags .tag:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+/* Category header styling */
+.blur-white .title.is-2 {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.blur-white .title.is-2:after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--accent-red);
+  border-radius: 3px;
+}
+
+/* Tag cloud enhancements */
+.tags.are-medium .tag:not(.is-normal):not(.is-large) {
+  font-size: 0.9rem;
+  margin: 0.3rem;
+}
+
+/* Post meta info styling */
+.post-meta {
+  color: var(--txt-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.post-meta i {
+  margin-right: 0.3rem;
+}
+
+/* Responsive image in media objects */
+.media-left .image img {
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px var(--shadow-light);
+  transition: transform 0.2s ease;
+}
+
+.media-left .image img:hover {
+  transform: scale(1.03);
+}
+
+/* Responsive adjustments for the enhanced footer */
+@media screen and (max-width: 768px) {
+  .footerX .columns {
+    text-align: center;
+  }
+
+  .footerX .column {
+    margin-bottom: 1.5rem;
+  }
+
+  .footerX h4:after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .footerX .social-buttons {
+    align-items: center;
+  }
+}
+
+/* Fade-in animation for page elements */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Text selection styling */
+::selection {
+  background-color: var(--accent-red);
+  color: white;
+}
+
+/* Button focus states */
+button:focus,
+.button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-red);
+}
