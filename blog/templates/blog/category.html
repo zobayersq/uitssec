@@ -1,0 +1,79 @@
+{% extends "blog/index.html" %}
+{% block hero %}{% endblock hero %}
+{% block page_title_last_part %} | Category: {{ category }} {% endblock page_title_last_part %}
+{% block page_title %}
+<div class="container">
+    <div class="blur-white mb-5">
+        <h1 class="title is-2 has-text-centered">
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="bi bi-tag-fill"></i>
+                </span>
+                <span>{{ category }}</span>
+            </span>
+        </h1>
+        <div class="has-text-centered">
+            <a href="{% url 'blog_category_list' %}" class="button is-primary is-outlined">
+                <span class="icon">
+                    <i class="bi bi-tags-fill"></i>
+                </span>
+                <span>All Categories</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock page_title %}
+
+{% block posts %}
+<div class="container">
+    {% for post in posts %}
+    <div class="blur-white">
+        <h3 class="title is-3"><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h3>
+        <div class="post-meta mb-3">
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="bi bi-calendar-event"></i>
+                </span>
+                <span>{{ post.created_on.date }}</span>
+            </span>
+            {% if post.categories.count > 1 %}
+            |
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="bi bi-tag-fill"></i>
+                </span>
+                <span>Also in:</span>
+            </span>
+            <div class="tags is-inline-block ml-2">
+                {% for cat in post.categories.all %}
+                {% if cat.name != category %}
+                <a href="{% url 'blog_category' cat.name %}">
+                    <span class="tag is-dark">{{ cat.name }}</span>
+                </a>
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="post-content">
+            <p>{{ post.body | slice:":400" }}...</p>
+
+            <div class="has-text-right mt-4">
+                <a href="{% url 'blog_detail' post.pk %}" class="button is-link">
+                    <span>Read More</span>
+                    <span class="icon">
+                        <i class="bi bi-arrow-right-circle-fill"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="blur-white has-text-centered">
+        <p class="is-size-4 mb-4">No posts in this category yet!</p>
+        <p>Be the first to create a post in the {{ category }} category.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock posts %}

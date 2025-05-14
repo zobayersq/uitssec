@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block page_title_last_part %} | Home{% endblock page_title_last_part %}
+{% block page_title %}
+<section class="hero">
+    <div class="hero-body hero-bodyX is-relative is-flex-tablet container">
+        <div class="is-size-4 has-text-weight-semibold">
+            <span>Hi there! Welcome to</span>
+            <p class="title is-1">Curio</p>
+            <p class="subtitle">A Minimal & Comfortable site to share your story, thoughts & adventure logs.<i
+                    class="bi bi-heart-fill"></i></p>
+        </div>
+
+        <div class="hero-image">
+            {% load static %}
+            <img src="{% static 'images/logo.png' %}" alt="Curio-logo">
+        </div>
+    </div>
+</section>
+{% endblock page_title %}
+
+{% block page_content %}
+<div class="container has-text-centered mb-5">
+    <h1 class="title is-2"><i class="bi bi-body-text"></i> Posts</h1>
+</div>
+
+{% block posts %}
+<div class="container">
+    {% for post in posts %}
+    <div class="blur-white">
+        <h3 class="title is-3"><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></h3>
+        <div class="post-meta mb-3">
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="bi bi-calendar-event"></i>
+                </span>
+                <span>{{ post.created_on.date }}</span>
+            </span>
+            |
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="bi bi-tag-fill"></i>
+                </span>
+                <span>Categories:</span>
+            </span>
+            <div class="tags is-inline-block ml-2">
+                {% for category in post.categories.all %}
+                <a href="{% url 'blog_category' category.name %}">
+                    <span class="tag is-dark">{{ category.name }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="post-content">
+            <p>{{ post.body | slice:":400" }}...</p>
+
+            <div class="has-text-right mt-4">
+                <a href="{% url 'blog_detail' post.pk %}" class="button is-link">
+                    <span>Read More</span>
+                    <span class="icon">
+                        <i class="bi bi-arrow-right-circle-fill"></i>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="blur-white has-text-centered">
+        <p class="is-size-4 mb-4">No posts yet!</p>
+        <p>Be the first to create a post and share your thoughts.</p>
+    </div>
+    {% endfor %}
+</div>
+{% endblock posts %}
+{% endblock page_content %}

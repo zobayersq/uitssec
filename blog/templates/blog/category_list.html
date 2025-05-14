@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block hero %}{% endblock hero %}
+{% block page_title_last_part %} | Categories{% endblock page_title_last_part %}
+{% block page_title %}{% endblock page_title %}
+
+{% block page_content %}
+<section class="section">
+    <div class="container">
+        <!-- Categories Header -->
+        <div class="blur-white mb-5">
+            <h1 class="title is-2 has-text-centered">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="bi bi-tags-fill"></i>
+                    </span>
+                    <span>Categories</span>
+                </span>
+            </h1>
+
+            <!-- Categories Tag Cloud -->
+            <div class="has-text-centered mt-4">
+                <div class="tags is-centered are-medium">
+                    {% for category in categories %}
+                    <a class="tag is-success has-text-weight-semibold is-medium"
+                        href="{% url 'blog_category' category.name %}">
+                        <span class="icon">
+                            <i class="bi bi-tag-fill"></i>
+                        </span>
+                        <span>{{ category.name }}</span>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Category Posts Lists -->
+        {% for category in categories %}
+        <div class="blur-white mb-5">
+            <h2 class="title is-4 mb-4">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="bi bi-folder-fill"></i>
+                    </span>
+                    <span>{{ category.name }}</span>
+                </span>
+            </h2>
+
+            <div class="content">
+                {% for post in category.posts.all %}
+                <article class="media mb-4 post-item">
+                    <figure class="media-left">
+                        <p class="image is-64x64">
+                            <img src="{% if post.image %}{{ post.image.url }}{% else %}{% static 'images/default-thumb.png' %}{% endif %}"
+                                alt="{{ post.title }} thumbnail">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong><a href="{% url 'blog_detail' post.pk %}">{{ post.title }}</a></strong>
+                                <br>
+                                <small>
+                                    <span class="icon-text">
+                                        <span class="icon">
+                                            <i class="bi bi-calendar-event"></i>
+                                        </span>
+                                        <span>{{ post.created_on|date:"M d, Y" }}</span>
+                                    </span>
+                                </small>
+                                <br>
+                                {{ post.body|truncatechars:150 }}
+                            </p>
+                        </div>
+                        <nav class="level is-mobile">
+                            <div class="level-left">
+                                {% for cat in post.categories.all %}
+                                {% if cat.name != category.name %}
+                                <a class="level-item tag is-dark mr-2" href="{% url 'blog_category' cat.name %}">{{
+                                    cat.name }}</a>
+                                {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="level-right">
+                                <a class="button is-small is-link" href="{% url 'blog_detail' post.pk %}">
+                                    <span>Read</span>
+                                    <span class="icon">
+                                        <i class="bi bi-arrow-right-circle-fill"></i>
+                                    </span>
+                                </a>
+                            </div>
+                        </nav>
+                    </div>
+                </article>
+                {% empty %}
+                <div class="has-text-centered py-4">
+                    <p class="is-italic">No posts found in this category.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

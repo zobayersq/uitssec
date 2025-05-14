@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block hero %}{% endblock hero %}
+{% block page_title_last_part %} | Reading: {{ post.title }}{% endblock page_title_last_part %}
+{% block page_title %}{% endblock page_title %}
+
+{% block page_content %}
+<div class="container">
+    <!-- Post Title Section -->
+    <div class="blur-white mb-5">
+        <h1 class="title is-2">{{ post.title }}</h1>
+
+        <!-- Post Metadata -->
+        <div class="post-meta mb-4">
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="bi bi-calendar-event"></i>
+                </span>
+                <span>{{ post.created_on.date }}</span>
+            </span>
+            |
+            <span class="icon-text">
+                <span class="icon">
+                    <i class="bi bi-tag-fill"></i>
+                </span>
+                <span>Categories:</span>
+            </span>
+            <div class="tags is-inline-block ml-2">
+                {% for category in post.categories.all %}
+                <a href="{% url 'blog_category' category.name %}">
+                    <span class="tag is-primary">{{ category.name }}</span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Post Content -->
+        <div class="content is-size-5 post-body">
+            {{ post.body | linebreaks }}
+        </div>
+
+        <!-- Love Button Section -->
+        <div class="love-section mt-5 mb-4">
+            <button id="love-btn-{{ post.id }}" class="love-button button is-rounded">
+                {% if request.user in post.love_reactions.all %}
+                <span class="icon is-medium"><i class="bi bi-heart-fill"></i></span>
+                {% else %}
+                <span class="icon is-medium"><i class="bi bi-heart"></i></span>
+                {% endif %}
+            </button>
+            <span id="love-count-{{ post.id }}" class="ml-2">
+                {{ post.get_love_count }} {{ post.get_love_count|pluralize:"love,loves" }}
+            </span>
+        </div>
+    </div>
+
+    <!-- Comment Form Section -->
+    <div class="blur-white mb-5">
+        <h3 class="title is-4 mb-4">Leave a comment</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div class="field">
+                <label class="label">Name</label>
+                <div class="control">
+                    {{ form.author }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Comment</label>
+                <div class="control">
+                    {{ form.body }}
+                </div>
+            </div>
+            <div class="field mt-4">
+                <div class="control">
+                    <button type="submit" class="button is-primary">
+                        <span class="icon">
+                            <i class="bi bi-send"></i>
+                        </span>
+                        <span>Submit</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Comments Section -->
+    <div class="blur-white">
+        <h3 class="title is-4 mb-4">Comments</h3>
+
+        {% for comment in comments %}
+        <div class="comment-item mb-4">
+            <div class="comment-header">
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="bi bi-chat-left-heart-fill"></i>
+                    </span>
+                    <span>On {{ comment.created_on.date }} <strong>{{ comment.author }}</strong> wrote:</span>
+                </span>
+            </div>
+            <div class="comment-body ml-4 mt-2 p-3">
+                {{ comment.body | linebreaks }}
+            </div>
+        </div>
+        {% empty %}
+        <div class="has-text-centered py-4">
+            <p>No comments yet. Be the first to share your thoughts!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock page_content %}

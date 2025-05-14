@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block hero %}
+{% endblock hero %}
+
+{% block page_content %}
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-6-tablet is-5-desktop is-4-widescreen">
+                <div class="card">
+                    <header class="card-header has-background-light">
+                        <p class="card-header-title has-text-success is-centered">
+                            <span class="icon has-text-danger"><i class="bi bi-box-arrow-in-right"></i></span>
+                            &nbsp;Login to uitssec
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="field">
+                                <label class="label">Username</label>
+                                <div class="control has-icons-left">
+                                    {{ form.username|add_class:"input" }}
+                                    <span class="icon is-small is-left"><i class="bi bi-person-fill"></i></span>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Password</label>
+                                <div class="control has-icons-left">
+                                    {{ form.password|add_class:"input" }}
+                                    <span class="icon is-small is-left"><i class="bi bi-lock-fill"></i></span>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <div class="control">
+                                    <button type="submit" class="button is-fullwidth is-danger">Login</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="{% url 'signup' %}" class="card-footer-item has-text-danger">Sign Up</a>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
